@@ -1,0 +1,24 @@
+{
+  "name": "react-native-aes-decryptor",
+  "version": "0.0.1",
+  "description": "AES-CBC-PKCS5Padding decryptor for files only",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "AES",
+    "CBC",
+    "PKCS5Padding"
+  ],
+  "author": "tgamidov",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tgamidov/react-native-aes-decryptor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tgamidov/react-native-aes-decryptor/issues"
+  },
+  "homepage": "https://github.com/tgamidov/react-native-aes-decryptor"
+}
