@@ -1,6 +1,6 @@
 {
   "name": "react-native-aes-decryptor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "AES-CBC-PKCS5Padding decryptor for files only",
   "main": "index.js",
   "scripts": {
