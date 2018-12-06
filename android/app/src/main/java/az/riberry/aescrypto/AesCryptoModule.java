@@ -63,18 +63,33 @@ public class AesCryptoModule extends ReactContextBaseJavaModule {
                 return;
             }
             byte[] raw = secretKey.getBytes("ASCII");
+            
             SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            IvParameterSpec iv = new IvParameterSpec(ivParameter.getBytes());
-            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
 
-            byte[] encrypted1 = fullyReadFileToBytes(new File(fSrc));
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
 
-            byte[] original = cipher.doFinal(encrypted1);
+            if (ivParameter.length() > 0) {
+                IvParameterSpec iv = new IvParameterSpec(ivParameter.getBytes());
+                cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
 
-            FileOutputStream out = new FileOutputStream(new File(fDst));
-            out.write(original);
-            out.close();
+                byte[] encrypted1 = fullyReadFileToBytes(new File(fSrc));
+
+                byte[] original = cipher.doFinal(encrypted1);
+
+                FileOutputStream out = new FileOutputStream(new File(fDst));
+                out.write(original);
+                out.close();
+            } else {
+                byte[] encrypted1 = fullyReadFileToBytes(new File(fSrc));
+
+                cipher.init(Cipher.DECRYPT_MODE, skeySpec, new IvParameterSpec(encrypted1, 0, 16));
+
+                byte[] original = cipher.doFinal(encrypted1, 16, encrypted1.length - 16);
+
+                FileOutputStream out = new FileOutputStream(new File(fDst));
+                out.write(original);
+                out.close();
+            }
 
             promise.resolve(fDst);
         } catch (Exception e) {
